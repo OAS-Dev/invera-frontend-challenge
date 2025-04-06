@@ -9,9 +9,9 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({onAddUser}) => {
   return (
     <header
-      className='flex justify-between items-center p-10 transition-colors duration-200 
-      dark:bg-black dark:text-white 
-      bg-white text-black border-b border-gray-200 dark:border-none'
+      className='flex justify-between items-center transition-colors duration-200 
+      dark:bg-[#212121] dark:text-white 
+      bg-white text-black dark:border-none'
     >
       <div className='text-xl font-medium'>Users</div>
       <Button
