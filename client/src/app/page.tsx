@@ -1,10 +1,13 @@
-import {Button} from '@/components/ui';
+import {Header} from '@/components';
+import {ToggleThemeButton} from '@/components/shared';
 
 export default function HomePage() {
   return (
     <div>
-      <h1 className='text-2xl font-bold'>Invera Frontend Challenge</h1>
-      <Button>Button</Button>
+      <div className='flex justify-end px-4 py-2'>
+        <ToggleThemeButton />
+      </div>
+      <Header />
     </div>
   );
 }
