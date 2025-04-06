@@ -1,6 +1,6 @@
 'use client';
 
-import {CircularGraph} from '../index';
+import {CircularGraph} from '../shared';
 
 export const Statistics = () => {
   return (

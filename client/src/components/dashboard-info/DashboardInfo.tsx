@@ -1,8 +1,8 @@
 'use client';
 
 import {useEffect, useState} from 'react';
+import {DashboadCard} from '../shared';
 import {getStatistics} from '@/services/statics.services';
-import {DashboadCard} from '../shared/cards/DashboadCard';
 
 interface StatisticsData {
   totalUsers: number;
