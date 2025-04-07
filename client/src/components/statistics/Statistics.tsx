@@ -3,6 +3,7 @@
 import {useEffect, useState} from 'react';
 import {UserTypes} from '@/interfaces/user.interface';
 import {CircularGraph} from '../shared';
+import {StatisticsSkeleton} from '@/components';
 import {getUserTypes} from '@/services/userTypes.services';
 
 export const Statistics = () => {
@@ -27,7 +28,7 @@ export const Statistics = () => {
   }, []);
 
   if (loading) {
-    return <div className='flex justify-center py-4'>Loading user types...</div>;
+    return <StatisticsSkeleton />;
   }
 
   if (error && !userTypes) {

@@ -2,6 +2,7 @@
 
 import {useEffect, useState} from 'react';
 import {DashboadCard} from '../shared';
+import {DashboardInfoSkeleton} from '@/components';
 import {getStatistics} from '@/services/statics.services';
 
 interface StatisticsData {
@@ -53,7 +54,7 @@ export const DashboardInfo = () => {
   }, []);
 
   if (loading) {
-    return <div className='flex justify-center py-4'>Loading statistics...</div>;
+    return <DashboardInfoSkeleton />;
   }
 
   if (error && !statistics) {

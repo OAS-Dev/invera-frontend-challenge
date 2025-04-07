@@ -5,10 +5,12 @@ import {User} from '@/interfaces/user.interface';
 import {DataTable} from '../shared/tables/user-table/data-table';
 import {columns} from '../shared/tables/user-table/columns';
 import {getAllUsers} from '@/services/user.services';
+import {UserDataSkeleton} from '@/components';
 
 export const UsersData = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -17,6 +19,7 @@ export const UsersData = () => {
         setUsers(data);
       } catch (error) {
         console.error('Error fetching users:', error);
+        setError('Failed to load users data');
       } finally {
         setLoading(false);
       }
@@ -26,13 +29,11 @@ export const UsersData = () => {
   }, []);
 
   if (loading) {
-    return (
-      <div className='rounded-xl border border-[#5F5F5F] py-6 px-6 bg-[#212121] text-white'>
-        <div className='flex justify-center items-center h-40'>
-          <p>Loading users...</p>
-        </div>
-      </div>
-    );
+    return <UserDataSkeleton />;
+  }
+
+  if (error && !users) {
+    return <div className='text-red-500 py-4'>{error}</div>;
   }
 
   return <DataTable columns={columns} data={users} />;
