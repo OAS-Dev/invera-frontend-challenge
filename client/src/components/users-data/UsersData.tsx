@@ -35,9 +35,5 @@ export const UsersData = () => {
     );
   }
 
-  return (
-    <div className='rounded-xl border border-[#5F5F5F] py-6 px-6 bg-[#212121] text-white'>
-      <DataTable columns={columns} data={users} />
-    </div>
-  );
+  return <DataTable columns={columns} data={users} />;
 };
