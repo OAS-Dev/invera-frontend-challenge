@@ -4,7 +4,7 @@ import {useState, useEffect} from 'react';
 import {User} from '@/interfaces/user.interface';
 import {DataTable} from '../shared/tables/user-table/data-table';
 import {columns} from '../shared/tables/user-table/columns';
-import {getAllUsers} from '@/services/user.services';
+import {deleteUser, getAllUsers} from '@/services/user.services';
 import {UserDataSkeleton} from '@/components';
 
 export const UsersData = () => {
@@ -28,6 +28,16 @@ export const UsersData = () => {
     fetchUsers();
   }, []);
 
+  const handleEdit = (id: number) => {
+    console.log('Edit user', id);
+  };
+
+  const handleDelete = (id: number) => {
+    deleteUser(id).then(() => {
+      setUsers(users.filter((user) => Number(user.id) !== id));
+    });
+  };
+
   if (loading) {
     return <UserDataSkeleton />;
   }
@@ -36,5 +46,5 @@ export const UsersData = () => {
     return <div className='text-red-500 py-4'>{error}</div>;
   }
 
-  return <DataTable columns={columns} data={users} />;
+  return <DataTable columns={columns} data={users} onEdit={handleEdit} onDelete={handleDelete} />;
 };

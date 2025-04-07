@@ -1,6 +1,6 @@
 'use client';
 
-import {useState} from 'react';
+import {useState, useMemo} from 'react';
 import {
   ColumnDef,
   flexRender,
@@ -10,6 +10,7 @@ import {
   getFilteredRowModel,
   SortingState,
   getSortedRowModel,
+  Row,
 } from '@tanstack/react-table';
 import {
   Button,
@@ -27,6 +28,8 @@ import {
 } from '@/components/ui';
 import {FiSearch} from 'react-icons/fi';
 import {IoArrowBack, IoArrowForward} from 'react-icons/io5';
+import {HiMiniPencil} from 'react-icons/hi2';
+import {TbTrashFilled} from 'react-icons/tb';
 
 // Definimos la interfaz para el meta de la columna
 interface ColumnMeta {
@@ -36,16 +39,50 @@ interface ColumnMeta {
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  onEdit?: (id: number) => void;
+  onDelete?: (id: number) => void;
 }
 
-export function DataTable<TData, TValue>({columns, data}: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({columns, data, onEdit, onDelete}: DataTableProps<TData, TValue>) {
   const [globalFilter, setGlobalFilter] = useState('');
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState({});
 
+  // Modify the columns to use the onEdit and onDelete props
+  const updatedColumns = useMemo(() => {
+    return columns.map(column => {
+      if (column.id === 'actions') {
+        return {
+          ...column,
+          cell: ({ row }: { row: Row<TData> }) => {
+            // Use type assertion to access id property safely
+            const id = (row.original as { id: number }).id;
+            return (
+              <div className='flex justify-end -ml-36 md:-ml-3 lg:ml-0'>
+                <button
+                  onClick={() => onEdit && onEdit(id)}
+                  className='p-2 text-gray-400 hover:text-white transition-colors'
+                >
+                  <HiMiniPencil size={18} />
+                </button>
+                <button
+                  onClick={() => onDelete && onDelete(id)}
+                  className='p-2 text-gray-400 hover:text-white transition-colors'
+                >
+                  <TbTrashFilled size={18} />
+                </button>
+              </div>
+            );
+          }
+        };
+      }
+      return column;
+    });
+  }, [columns, onEdit, onDelete]);
+
   const table = useReactTable({
     data,
-    columns,
+    columns: updatedColumns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
