@@ -72,18 +72,18 @@ export const columns: ColumnDef<UserColumns>[] = [
   {
     accessorKey: 'phone',
     header: ({column}) => (
-      <div className='md:w-16 lg:w-full md:flex md:justify-center md:-ml-4 lg:-ml-8'>
+      <div className='hidden md:flex md:w-16 lg:w-full md:justify-center md:-ml-4 lg:-ml-8'>
         <Button variant='ghost' onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
-          <div className='flex items-center gap-2'>
+          <div className='hidden md:flex items-center gap-2'>
             <BiSolidPhone className='h-4 w-4' />
             <span className='font-bold'>Phone</span>
           </div>
-          <RxCaretSort className='h-4 w-4' />
+          <RxCaretSort className='hidden md:flex h-4 w-4' />
         </Button>
       </div>
     ),
     cell: ({row}) => {
-      return <div className='md:text-xs md:font-normal'>{row.getValue('phone')}</div>;
+      return <div className='hidden md:table-cell md:text-xs md:font-normal'>{row.getValue('phone')}</div>;
     },
     meta: {
       className: 'hidden md:table-cell',
@@ -92,18 +92,18 @@ export const columns: ColumnDef<UserColumns>[] = [
   {
     accessorKey: 'location',
     header: ({column}) => (
-      <div className='md:w-16 lg:w-full md:flex md:justify-center lg:justify-start md:-ml-6 lg:-ml-5'>
+      <div className='hidden md:flex md:w-16 lg:w-full md:justify-center lg:justify-start md:-ml-6 lg:-ml-5'>
         <Button variant='ghost' onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
-          <div className='flex items-center gap-2'>
+          <div className='hidden md:flex items-center gap-2'>
             <IoLocationSharp className='h-4 w-4' />
             <span className='font-bold'>Location</span>
           </div>
-          <RxCaretSort className='h-4 w-4' />
+          <RxCaretSort className='hidden md:flex h-4 w-4' />
         </Button>
       </div>
     ),
     cell: ({row}) => {
-      return <div className='md:text-xs md:font-normal'>{row.getValue('location')}</div>;
+      return <div className='hidden md:table-cell md:text-xs md:font-normal'>{row.getValue('location')}</div>;
     },
     meta: {
       className: 'hidden md:table-cell',
@@ -112,13 +112,13 @@ export const columns: ColumnDef<UserColumns>[] = [
   {
     accessorKey: 'company',
     header: ({column}) => (
-      <div className='md:w-16 lg:w-full md:flex md:justify-center lg:justify-start lg:-ml-5'>
+      <div className='hidden md:flex md:w-16 lg:w-full md:justify-center lg:justify-start lg:-ml-5'>
         <Button variant='ghost' onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
-          <div className='flex items-center gap-2'>
+          <div className='hidden md:flex items-center gap-2'>
             <TbBriefcase2Filled className='h-4 w-4' />
-            <span className='font-bold'>Company</span>
+            <span className='font-bold hidden md:block'>Company</span>
           </div>
-          <RxCaretSort className='h-4 w-4' />
+          <RxCaretSort className='hidden md:flex h-4 w-4' />
         </Button>
       </div>
     ),
@@ -160,13 +160,13 @@ export const columns: ColumnDef<UserColumns>[] = [
       const logoPath = hasLogo ? `/icons/company/${companySlug}.svg` : '';
 
       return (
-        <div className='flex items-center gap-2 md:text-xs md:font-normal md:-ml-5 lg:ml-0'>
+        <div className='hidden md:flex items-center gap-2 md:text-xs md:font-normal md:-ml-5 lg:ml-0'>
           {hasLogo && (
             <div className='relative h-5 w-5 flex-shrink-0'>
               <Image src={logoPath} alt={`${company} logo`} className='object-contain' fill sizes='20px' />
             </div>
           )}
-          <span className='md:text-xs md:font-normal'>{company}</span>
+          <span className='hidden md:block md:text-xs md:font-normal'>{company}</span>
         </div>
       );
     },
@@ -177,7 +177,7 @@ export const columns: ColumnDef<UserColumns>[] = [
   {
     accessorKey: 'status',
     header: ({column}) => (
-      <div className='md:w-8 lg:w-full md:flex md:justify-center lg:justify-start md:ml-4 lg:-ml-5'>
+      <div className='md:w-8 lg:w-full md:flex md:justify-center lg:justify-start -ml-36 md:ml-4 lg:-ml-5'>
         <Button variant='ghost' onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
           <div className='items-center gap-2 hidden md:flex'>
             <IoIosCheckbox className='h-4 w-4' />
@@ -191,7 +191,7 @@ export const columns: ColumnDef<UserColumns>[] = [
       const status = row.getValue('status') as string;
       return (
         <div
-          className={`-ml-4 md:-ml-5 lg:ml-0 px-1 py-0.5 md:px-2 md:py-1 rounded-md text-[10px] md:text-xs inline-flex items-center gap-0.5 md:gap-1 ${
+          className={`-ml-28 md:-ml-5 lg:ml-0 px-1 py-0.5 md:px-2 md:py-1 rounded-md text-[10px] md:text-xs inline-flex items-center gap-0.5 md:gap-1 ${
             status === 'Online' ? 'bg-green-900 text-green-500' : 'bg-gray-700 text-gray-400'
           }`}
         >
@@ -206,7 +206,7 @@ export const columns: ColumnDef<UserColumns>[] = [
     header: () => <div className=' hidden'>Actions</div>,
     cell: ({row}) => {
       return (
-        <div className='flex justify-end -ml-3 lg:ml-0'>
+        <div className='flex justify-end -ml-36 md:-ml-3 lg:ml-0'>
           <button
             onClick={() => console.log('Edit user', row.original.id)}
             className='p-2 text-gray-400 hover:text-white transition-colors'
