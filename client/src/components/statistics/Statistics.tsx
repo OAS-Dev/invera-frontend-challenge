@@ -36,8 +36,8 @@ export const Statistics = () => {
   }
 
   return (
-    <div className='rounded-xl border border-[#5F5F5F] py-8 px-6 bg-[#121212] text-white'>
-      <h1 className='text-lg font-semibold mb-6'>Estadísticas</h1>
+    <div className='rounded-xl border border-[#5F5F5F] dark:border-[#5F5F5F] py-8 px-6 bg-white dark:bg-[#121212] text-black dark:text-white shadow-sm'>
+      <h1 className='text-lg font-semibold mb-6'>Statistics</h1>
 
       <div className='flex flex-col md:flex-row md:items-center'>
         <div className='flex justify-center mb-6 lg:mb-0 md:w-1/2'>
@@ -56,9 +56,9 @@ export const Statistics = () => {
               <div key={index} className='flex items-center justify-between gap-2 md:pl-6 lg:pr-36'>
                 <div className='flex items-center gap-2'>
                   <span className={`h-2 w-2 rounded-full ${bgColor}`}></span>
-                  <span>{item.type}</span>
+                  <p className='text-[#6B7280] dark:text-white'>{item.type}</p>
                 </div>
-                <span className='font-semibold'>{item.percentage}%</span>
+                <p className='text-[#111827] dark:text-white font-medium'>{item.percentage}%</p>
               </div>
             );
           })}

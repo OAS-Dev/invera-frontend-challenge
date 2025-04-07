@@ -58,7 +58,22 @@ export const DashboardInfo = () => {
   }
 
   if (error && !statistics) {
-    return <div className='text-red-500 py-4'>{error}</div>;
+    return (
+      <div className='bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 my-4'>
+        <div className='flex items-center'>
+          <svg className='w-5 h-5 text-red-500 mr-2' fill='currentColor' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'>
+            <path fillRule='evenodd' d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z' clipRule='evenodd'></path>
+          </svg>
+          <p className='text-red-700 dark:text-red-400 font-medium'>{error}</p>
+        </div>
+        <button 
+          onClick={() => window.location.reload()} 
+          className='mt-3 bg-red-100 dark:bg-red-800/30 hover:bg-red-200 dark:hover:bg-red-800/50 text-red-700 dark:text-red-400 px-4 py-2 rounded-md text-sm font-medium transition-colors'
+        >
+          Retry
+        </button>
+      </div>
+    );
   }
 
   return (
