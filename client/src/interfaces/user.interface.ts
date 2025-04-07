@@ -7,3 +7,13 @@ export interface User {
   company: string;
   status: string;
 }
+
+export interface UserTypes {
+  totalUsers: number;
+  distribution: Distribution[];
+}
+
+export interface Distribution {
+  type: string;
+  percentage: number;
+}
