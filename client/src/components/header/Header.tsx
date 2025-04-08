@@ -1,26 +1,43 @@
 'use client';
 
+import {useState} from 'react';
 import {Button} from '../ui';
+import {UserFormModal} from '@/components/shared';
 
-interface HeaderProps {
-  onAddUser?: () => void;
-}
+export const Header = () => {
+  const [open, setOpen] = useState(false);
 
-export const Header: React.FC<HeaderProps> = ({onAddUser}) => {
+  const handleAddUser = () => {
+    setOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpen(false);
+  };
+
   return (
-    <header
-      className='flex justify-between items-center transition-colors duration-200 
-      dark:bg-[#212121] dark:text-white 
-      bg-white text-black dark:border-none'
-    >
-      <div className='text-xl font-medium'>Users</div>
-      <Button
-        onClick={onAddUser}
-        className='bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded transition-colors'
-        variant='default'
+    <>
+      <header
+        className='flex justify-between items-center transition-colors duration-200 
+        dark:bg-[#212121] dark:text-white 
+        bg-white text-black dark:border-none'
       >
-        Add user
-      </Button>
-    </header>
+        <div className='text-xl font-medium'>Users</div>
+        <Button
+          onClick={handleAddUser}
+          className='w-[140px] font-bold bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition-colors'
+          variant='default'
+        >
+          Add user
+        </Button>
+      </header>
+
+      <UserFormModal 
+        isOpen={open} 
+        onClose={handleCloseModal} 
+        mode="create"
+        onSubmit={(data) => console.log('Form submitted:', data)}
+      />
+    </>
   );
 };
