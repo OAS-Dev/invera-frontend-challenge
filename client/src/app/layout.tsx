@@ -26,7 +26,24 @@ export default function RootLayout({
       <body className={`${sora.className} antialiased`}>
         <ThemeProvider attribute='class' defaultTheme='dark' enableSystem disableTransitionOnChange>
           {children}
-          <Toaster />
+          <Toaster
+            position='top-center'
+            expand={false}
+            richColors
+            closeButton
+            theme='system'
+            className='font-medium'
+            toastOptions={{
+              duration: 3000,
+              classNames: {
+                toast: 'rounded-lg border border-gray-200 dark:border-[#5F5F5F] shadow-lg',
+                success: 'group border-l-4 border-l-[#2CE284]',
+                error: 'group border-l-4 border-l-[#ff5c5c]',
+                info: 'group border-l-4 border-l-[#7B99FF]',
+                warning: 'group border-l-4 border-l-[#ffb347]',
+              },
+            }}
+          />
         </ThemeProvider>
       </body>
     </html>
