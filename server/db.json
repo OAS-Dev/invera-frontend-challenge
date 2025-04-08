@@ -1,87 +1,6 @@
 {
   "users": [
     {
-      "id": 1,
-      "name": "John Doe",
-      "email": "john@example.com",
-      "phone": "(123) 456-7890",
-      "location": "United States",
-      "company": "Example Inc.",
-      "status": "Online"
-    },
-    {
-      "id": 2,
-      "name": "Jane Smith",
-      "email": "jane@example.com",
-      "phone": "(456) 789-0123",
-      "location": "Canada",
-      "company": "Example Inc.",
-      "status": "Offline"
-    },
-    {
-      "id": 3,
-      "name": "Matt Cannon",
-      "email": "matt@facebook.com",
-      "phone": "(319) 098-9899",
-      "location": "Australia",
-      "company": "Facebook",
-      "status": "Offline"
-    },
-    {
-      "id": 4,
-      "name": "Graham Hills",
-      "email": "graham@twitter.com",
-      "phone": "(540) 827-3880",
-      "location": "India",
-      "company": "Twitter",
-      "status": "Online"
-    },
-    {
-      "id": 5,
-      "name": "Sandy Houston",
-      "email": "sandy@youtube.com",
-      "phone": "(440) 410-3848",
-      "location": "Canada",
-      "company": "YouTube",
-      "status": "Offline"
-    },
-    {
-      "id": 6,
-      "name": "Andy Smith",
-      "email": "andy@reddit.com",
-      "phone": "(424) 458-3268",
-      "location": "United States",
-      "company": "Reddit",
-      "status": "Online"
-    },
-    {
-      "id": 7,
-      "name": "Lilly Woods",
-      "email": "lilly@spotify.com",
-      "phone": "(361) 892-1819",
-      "location": "Australia",
-      "company": "Spotify",
-      "status": "Offline"
-    },
-    {
-      "id": 8,
-      "name": "Patrick Meyer",
-      "email": "patrick@pinterest.com",
-      "phone": "(760) 882-5670",
-      "location": "United Kingdom",
-      "company": "Pinterest",
-      "status": "Online"
-    },
-    {
-      "id": 9,
-      "name": "Frances Willen",
-      "email": "frances@twitch.com",
-      "phone": "(236) 496-5864",
-      "location": "Canada",
-      "company": "Twitch",
-      "status": "Offline"
-    },
-    {
       "id": 10,
       "name": "Ernest Houston",
       "email": "ernest@linkedin.com",
@@ -89,15 +8,6 @@
       "location": "India",
       "company": "LinkedIn",
       "status": "Offline"
-    },
-    {
-      "id": 11,
-      "name": "Miguel Sánchez",
-      "email": "miguel@apple.com",
-      "phone": "(512) 555-1234",
-      "location": "Spain",
-      "company": "Apple",
-      "status": "Online"
     },
     {
       "id": 12,
