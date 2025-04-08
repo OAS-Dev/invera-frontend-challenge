@@ -1,6 +1,7 @@
 'use client';
 
 import {useState, useEffect} from 'react';
+import {toast} from 'sonner';
 import {User} from '@/interfaces/user.interface';
 import {DataTable} from '@/components/shared/tables/user-table/data-table';
 import {columns} from '@/components/shared/tables/user-table/columns';
@@ -55,10 +56,17 @@ export const UsersData = () => {
     setIsCreateModalOpen(false);
   };
 
-  const handleDelete = (id: number) => {
-    deleteUser(id).then(() => {
+  const handleDelete = async (id: number) => {
+    try {
+      await deleteUser(id);
       setUsers(users.filter((user) => Number(user.id) !== id));
-    });
+      toast.success('Usuario eliminado correctamente');
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      toast.error('Error al eliminar el usuario', {
+        description: 'Ha ocurrido un error al intentar eliminar el usuario',
+      });
+    }
   };
 
   if (loading && users.length === 0) {

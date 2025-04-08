@@ -57,7 +57,7 @@ export function DataTable<TData, TValue>({columns, data, onEdit, onDelete}: Data
           cell: ({row}: {row: Row<TData>}) => {
             const id = (row.original as {id: number}).id;
             return (
-              <div className='flex justify-end -ml-36 md:-ml-3 lg:ml-0'>
+              <div className='flex justify-end md:justify-start -ml-40 md:-ml-3 lg:ml-0'>
                 <button
                   onClick={() => onEdit && onEdit(id)}
                   className='p-2 text-gray-400 hover:text-white transition-colors'
@@ -141,7 +141,7 @@ export function DataTable<TData, TValue>({columns, data, onEdit, onDelete}: Data
                             <TableHead
                               key={header.id}
                               className={`px-4 text-gray-700 dark:text-white ${
-                                (header.column.columnDef.meta as ColumnMeta)?.className
+                                (header.column.columnDef.meta as ColumnMeta)?.className || ''
                               }`}
                             >
                               {header.isPlaceholder

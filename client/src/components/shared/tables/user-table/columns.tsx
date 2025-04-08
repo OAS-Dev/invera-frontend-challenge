@@ -172,4 +172,9 @@ export const columns: ColumnDef<UserColumns>[] = [
       );
     },
   },
+  {
+    id: 'actions',
+    cell: () => null,
+    header: () => <div className='hidden md:table-cell'>Actions</div>,
+  },
 ];
