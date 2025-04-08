@@ -2,6 +2,7 @@ import type {Metadata} from 'next';
 import {Sora} from 'next/font/google';
 import './globals.css';
 import {ThemeProvider} from '@/components/theme-provider';
+import {Toaster} from '@/components/ui/sonner';
 
 const sora = Sora({
   weight: ['400', '500', '600', '700'],
@@ -25,6 +26,7 @@ export default function RootLayout({
       <body className={`${sora.className} antialiased`}>
         <ThemeProvider attribute='class' defaultTheme='dark' enableSystem disableTransitionOnChange>
           {children}
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
