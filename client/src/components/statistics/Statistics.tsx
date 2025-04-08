@@ -1,9 +1,9 @@
 'use client';
 
 import {useEffect, useState} from 'react';
-import {UserTypes} from '@/interfaces/user.interface';
-import {CircularGraph} from '../shared';
+import {CircularGraph} from '@/components/shared';
 import {StatisticsSkeleton} from '@/components';
+import {UserTypes} from '@/interfaces/user.interface';
 import {getUserTypes} from '@/services/userTypes.services';
 
 export const Statistics = () => {
@@ -46,7 +46,6 @@ export const Statistics = () => {
 
         <div className='space-y-4 md:w-1/2'>
           {userTypes?.distribution.map((item, index) => {
-            // Determinar el color basado en el tipo
             let bgColor = '';
             if (item.type === 'Organic') bgColor = 'bg-[#7B99FF]';
             else if (item.type === 'Social') bgColor = 'bg-[#C9D7FD]';

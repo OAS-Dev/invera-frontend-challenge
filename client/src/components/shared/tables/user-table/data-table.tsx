@@ -16,7 +16,6 @@ import {
   Button,
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
@@ -26,6 +25,7 @@ import {
   TableHead,
   TableRow,
 } from '@/components/ui';
+
 import {FiSearch} from 'react-icons/fi';
 import {IoArrowBack, IoArrowForward} from 'react-icons/io5';
 import {HiMiniPencil} from 'react-icons/hi2';
@@ -39,6 +39,7 @@ interface ColumnMeta {
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+
   onEdit?: (id: number) => void;
   onDelete?: (id: number) => void;
 }
@@ -48,15 +49,13 @@ export function DataTable<TData, TValue>({columns, data, onEdit, onDelete}: Data
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState({});
 
-  // Modify the columns to use the onEdit and onDelete props
   const updatedColumns = useMemo(() => {
-    return columns.map(column => {
+    return columns.map((column) => {
       if (column.id === 'actions') {
         return {
           ...column,
-          cell: ({ row }: { row: Row<TData> }) => {
-            // Use type assertion to access id property safely
-            const id = (row.original as { id: number }).id;
+          cell: ({row}: {row: Row<TData>}) => {
+            const id = (row.original as {id: number}).id;
             return (
               <div className='flex justify-end -ml-36 md:-ml-3 lg:ml-0'>
                 <button
@@ -73,7 +72,7 @@ export function DataTable<TData, TValue>({columns, data, onEdit, onDelete}: Data
                 </button>
               </div>
             );
-          }
+          },
         };
       }
       return column;
@@ -131,7 +130,6 @@ export function DataTable<TData, TValue>({columns, data, onEdit, onDelete}: Data
           </div>
 
           <div className='w-full'>
-            {/* Estructura simplificada para que los bordes cubran todo el ancho */}
             <div className='w-full'>
               <div className='min-w-full'>
                 <Table className='w-full mt-1'>
@@ -142,7 +140,9 @@ export function DataTable<TData, TValue>({columns, data, onEdit, onDelete}: Data
                           return (
                             <TableHead
                               key={header.id}
-                              className={`px-4 text-gray-700 dark:text-white ${(header.column.columnDef.meta as ColumnMeta)?.className}`}
+                              className={`px-4 text-gray-700 dark:text-white ${
+                                (header.column.columnDef.meta as ColumnMeta)?.className
+                              }`}
                             >
                               {header.isPlaceholder
                                 ? null
@@ -185,109 +185,57 @@ export function DataTable<TData, TValue>({columns, data, onEdit, onDelete}: Data
         </div>
       </div>
 
-      {/* Mobile Pagination */}
-      <div className='grid grid-cols-3 items-center gap-2 justify-between mt-4 px-4 md:hidden'>
-        {/* Contador de páginas - siempre a la izquierda */}
-        <div className='text-sm text-gray-700 dark:text-[#FFFFFF]'>
-          {table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1} -{' '}
-          {Math.min(
-            (table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize,
-            table.getFilteredRowModel().rows.length,
-          )}{' '}
-          of {table.getFilteredRowModel().rows.length}
-        </div>
+      {/* Unified Pagination */}
+      <div className='mt-4'>
+        <div className='grid grid-cols-3 items-center gap-2 justify-between'>
+          <div className='text-sm md:text-base text-gray-700 dark:text-[#FFFFFF]'>
+            {table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1} -{' '}
+            {Math.min(
+              (table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize,
+              table.getFilteredRowModel().rows.length,
+            )}{' '}
+            of {table.getFilteredRowModel().rows.length}
+          </div>
 
-        {/* Selector de filas - en el centro */}
-        <div className='flex items-center justify-center'>
-          <p className='text-sm text-gray-700 dark:text-[#FFFFFF] mr-1'>Rows:</p>
-          <Select onValueChange={(value) => table.setPageSize(+value)}>
-            <SelectTrigger className='w-[60px] bg-white dark:bg-[#121212] border-gray-300 dark:border-[#5F5F5F] text-black dark:text-white'>
-              <SelectValue placeholder='10' />
-            </SelectTrigger>
-            <SelectContent className='bg-white dark:bg-[#121212] border-gray-300 dark:border-[#5F5F5F] text-black dark:text-white'>
-              <SelectGroup>
-                <SelectItem value='10'>10</SelectItem>
-                <SelectItem value='20'>20</SelectItem>
-                <SelectItem value='50'>50</SelectItem>
-                <SelectItem value='100'>100</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
+          <div className='flex items-center justify-center'>
+            <p className='text-sm md:text-base text-gray-700 dark:text-[#FFFFFF] mr-1'>
+              <span className='hidden md:inline'>Rows per page:</span>
+              <span className='inline md:hidden'>Rows:</span>
+            </p>
+            <Select onValueChange={(value) => table.setPageSize(+value)}>
+              <SelectTrigger className='h-8 w-[70px] border-gray-300 dark:border-[#5F5F5F] bg-white dark:bg-[#212121] text-black dark:text-white'>
+                <SelectValue placeholder={table.getState().pagination.pageSize} />
+              </SelectTrigger>
+              <SelectContent className='bg-white dark:bg-[#212121] text-black dark:text-white border-gray-300 dark:border-[#5F5F5F]'>
+                {[5, 10, 20, 30, 40, 50].map((pageSize) => (
+                  <SelectItem key={pageSize} value={`${pageSize}`}>
+                    {pageSize}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
 
-        {/* Botones de navegación - a la derecha */}
-        <div className='flex items-center gap-2 justify-end'>
-          <Button
-            variant='outline'
-            size='sm'
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-            className='border-gray-300 dark:border-[#5F5F5F] w-8 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-[#1A1A1A]'
-          >
-            <IoArrowBack className='h-4 w-4' color='#7B99FF' />
-          </Button>
-          <Button
-            variant='outline'
-            size='sm'
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-            className='border-gray-300 dark:border-[#5F5F5F] w-8 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-[#1A1A1A]'
-          >
-            <IoArrowForward className='h-4 w-4' color='#7B99FF' />
-          </Button>
-        </div>
-      </div>
-
-      {/* Desktop Pagination */}
-      <div className='items-center gap-2 justify-between mt-4 hidden md:grid md:grid-cols-3'>
-        {/* Contador de páginas - siempre a la izquierda */}
-        <div className='text-base text-gray-700 dark:text-[#FFFFFF]'>
-          {table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1} -{' '}
-          {Math.min(
-            (table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize,
-            table.getFilteredRowModel().rows.length,
-          )}{' '}
-          of {table.getFilteredRowModel().rows.length}
-        </div>
-
-        {/* Selector de filas - en el centro */}
-        <div className='flex items-center justify-center'>
-          <p className='text-base text-gray-700 dark:text-[#FFFFFF] mr-1'>Rows per page:</p>
-          <Select onValueChange={(value) => table.setPageSize(+value)}>
-            <SelectTrigger className='w-[60px] bg-white dark:bg-[#121212] border-gray-300 dark:border-[#5F5F5F] text-black dark:text-white'>
-              <SelectValue placeholder='10' />
-            </SelectTrigger>
-            <SelectContent className='bg-white dark:bg-[#121212] border-gray-300 dark:border-[#5F5F5F] text-black dark:text-white'>
-              <SelectGroup>
-                <SelectItem value='10'>10</SelectItem>
-                <SelectItem value='20'>20</SelectItem>
-                <SelectItem value='50'>50</SelectItem>
-                <SelectItem value='100'>100</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
-
-        {/* Botones de navegación - a la derecha */}
-        <div className='flex items-center gap-2 justify-end'>
-          <Button
-            variant='outline'
-            size='sm'
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-            className='border-gray-300 dark:border-[#5F5F5F] w-8 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-[#1A1A1A]'
-          >
-            <IoArrowBack className='h-4 w-4' color='#7B99FF' />
-          </Button>
-          <Button
-            variant='outline'
-            size='sm'
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-            className='border-gray-300 dark:border-[#5F5F5F] w-8 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-[#1A1A1A]'
-          >
-            <IoArrowForward className='h-4 w-4' color='#7B99FF' />
-          </Button>
+          <div className='flex items-center gap-2 justify-end'>
+            <Button
+              variant='outline'
+              size='sm'
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+              className='border-gray-300 dark:border-[#5F5F5F] w-8 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-[#1A1A1A]'
+            >
+              <IoArrowBack className='h-4 w-4' color='#7B99FF' />
+            </Button>
+            <Button
+              variant='outline'
+              size='sm'
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+              className='border-gray-300 dark:border-[#5F5F5F] w-8 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-[#1A1A1A]'
+            >
+              <IoArrowForward className='h-4 w-4' color='#7B99FF' />
+            </Button>
+          </div>
         </div>
       </div>
     </>

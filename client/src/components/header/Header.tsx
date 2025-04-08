@@ -1,7 +1,7 @@
 'use client';
 
 import {useState} from 'react';
-import {Button} from '../ui';
+import {Button} from '@/components/ui';
 import {UserFormModal} from '@/components/shared';
 
 export const Header = () => {
@@ -32,11 +32,11 @@ export const Header = () => {
         </Button>
       </header>
 
-      <UserFormModal 
-        isOpen={open} 
-        onClose={handleCloseModal} 
-        mode="create"
-        onSubmit={(data) => console.log('Form submitted:', data)}
+      <UserFormModal
+        isOpen={open}
+        onClose={handleCloseModal}
+        mode='create'
+        onSuccess={() => console.log('User created successfully!')}
       />
     </>
   );

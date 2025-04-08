@@ -4,14 +4,14 @@ import Image from 'next/image';
 import {ColumnDef} from '@tanstack/react-table';
 import {Button, Checkbox} from '@/components/ui';
 import {User} from '@/interfaces/user.interface';
+import {CONFIG} from '@/config/config';
 
 import {BiSolidPhone} from 'react-icons/bi';
 import {FaUser} from 'react-icons/fa';
 import {IoIosCheckbox} from 'react-icons/io';
 import {IoLocationSharp} from 'react-icons/io5';
-import {TbBriefcase2Filled, TbTrashFilled} from 'react-icons/tb';
+import {TbBriefcase2Filled} from 'react-icons/tb';
 import {RxCaretSort} from 'react-icons/rx';
-import {HiMiniPencil} from 'react-icons/hi2';
 
 export type UserColumns = User;
 
@@ -124,39 +124,10 @@ export const columns: ColumnDef<UserColumns>[] = [
     ),
     cell: ({row}) => {
       const company = row.getValue('company') as string;
-      // Convert company name to lowercase and remove spaces for matching with file names
+
       const companySlug = company.toLowerCase().replace(/\s+/g, '');
 
-      // List of available company logos
-      const availableLogos = [
-        'adobe',
-        'airbnb',
-        'apple',
-        'baidu',
-        'bmw',
-        'canva',
-        'facebook',
-        'ferrari',
-        'google',
-        'hsbc',
-        'linkedin',
-        'microsoft',
-        'pinterest',
-        'reddit',
-        'samsung',
-        'shopify',
-        'slack',
-        'spotify',
-        'tencent',
-        'tesla',
-        'twitch',
-        'twitter',
-        'youtube',
-        'zoom',
-      ];
-
-      // Check if we have a logo for this company
-      const hasLogo = availableLogos.includes(companySlug);
+      const hasLogo = CONFIG.LOGOS.includes(companySlug);
       const logoPath = hasLogo ? `/icons/company/${companySlug}.svg` : '';
 
       return (
@@ -197,28 +168,6 @@ export const columns: ColumnDef<UserColumns>[] = [
         >
           <span className='h-1.5 w-1.5 md:h-2 md:w-2 rounded-full bg-current'></span>
           <span className='md:text-xs md:font-normal'>{status}</span>
-        </div>
-      );
-    },
-  },
-  {
-    id: 'actions',
-    header: () => <div className=' hidden'>Actions</div>,
-    cell: ({row}) => {
-      return (
-        <div className='flex justify-end -ml-36 md:-ml-3 lg:ml-0'>
-          <button
-            onClick={() => console.log('Edit user', row.original.id)}
-            className='p-2 text-gray-400 hover:text-white transition-colors'
-          >
-            <HiMiniPencil size={18} />
-          </button>
-          <button
-            onClick={() => console.log('Delete user', row.original.id)}
-            className='p-2 text-gray-400 hover:text-white transition-colors'
-          >
-            <TbTrashFilled size={18} />
-          </button>
         </div>
       );
     },
