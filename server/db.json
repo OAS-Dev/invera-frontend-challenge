@@ -46,39 +46,12 @@
       "status": "Offline"
     },
     {
-      "id": 31,
-      "name": "Ana Rodriguez",
-      "email": "ana@telefonica.com",
-      "phone": "(349) 555-2345",
-      "location": "Spain",
-      "company": "Telefonica",
-      "status": "Online"
-    },
-    {
       "id": 32,
       "name": "James Wilson",
       "email": "james@atlassian.com",
       "phone": "(612) 555-6789",
       "location": "Australia",
       "company": "Atlassian",
-      "status": "Offline"
-    },
-    {
-      "id": 33,
-      "name": "Priya Sharma",
-      "email": "priya@infosys.com",
-      "phone": "(918) 555-0123",
-      "location": "India",
-      "company": "Infosys",
-      "status": "Online"
-    },
-    {
-      "id": 34,
-      "name": "Carlos Mendoza",
-      "email": "carlos@pemex.com",
-      "phone": "(525) 555-4567",
-      "location": "Mexico",
-      "company": "Pemex",
       "status": "Offline"
     },
     {
@@ -224,15 +197,6 @@
       "location": "Egypt",
       "company": "Elsewedy",
       "status": "Offline"
-    },
-    {
-      "name": "test",
-      "email": "test@test.com",
-      "phone": "1162521234",
-      "location": "Argentina",
-      "company": "Apple",
-      "status": "Online",
-      "id": "51"
     },
     {
       "name": "dfsdfdsf",
