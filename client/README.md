@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Invera Frontend Challenge
 
-## Getting Started
+## Stack utilizado
 
-First, run the development server:
+- **Framework**: Next.js 14
+- **Lenguaje**: TypeScript
+- **Estilos**: Tailwind CSS
+- **Componentes UI**: Shadcn UI
+- **Manejo de formularios**: React Hook Form con validación Zod
+- **Visualización de datos**: Recharts
+- **Gestión de tablas**: TanStack React Table
+- **Pruebas**: Jest con React Testing Library
+- **Notificaciones**: Sonner
+- **Gestión de temas**: next-themes
+
+## Comenzando
+
+Primero, instala las dependencias:
+
+```bash
+npm install
+# o
+yarn install
+# o
+pnpm install
+```
+
+Luego, ejecuta el servidor de desarrollo:
 
 ```bash
 npm run dev
-# or
+# o
 yarn dev
-# or
+# o
 pnpm dev
-# or
+# o
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abre [http://localhost:3000](http://localhost:3000) en tu navegador para ver la aplicación.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Estructura del Proyecto
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `/src/app`: Páginas principales y layouts de la aplicación
+- `/src/components`: Componentes UI reutilizables
+- `/src/services`: Funciones de servicio para API
+- `/src/interfaces`: Interfaces TypeScript
+- `/src/lib`: Funciones de utilidad y helpers
+- `/src/__tests__`: Archivos de prueba
 
-## Learn More
+## Pruebas
 
-To learn more about Next.js, take a look at the following resources:
+Ejecuta las pruebas con:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm test
+# o
+npm run test:watch
+```
