@@ -1,6 +1,7 @@
 import {render, screen} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import {DataTable} from '@/components/shared/tables/user-table/data-table';
+import {Pagination} from '@/components/shared/tables/user-table/components/Pagination';
 import {ColumnDef} from '@tanstack/react-table';
 
 // Mock para window.matchMedia
@@ -18,8 +19,13 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
+// Mock del componente Pagination
+jest.mock('@/components/shared/tables/user-table/components/Pagination', () => ({
+  Pagination: jest.fn(() => <div data-testid='mocked-pagination'>Pagination Component</div>),
+}));
+
 interface MockUser {
-  id: number;
+  id: string;
   name: string;
   email: string;
   role: string;
@@ -29,7 +35,43 @@ interface MockUser {
   status: string;
 }
 
-const mockColumns: ColumnDef<MockUser, unknown>[] = [
+const mockData: MockUser[] = [
+  {
+    id: '1',
+    name: 'John Doe',
+    email: 'john@example.com',
+    role: 'Admin',
+    phone: '123-456-7890',
+    location: 'New York',
+    company: 'Acme Inc',
+    status: 'Online',
+  },
+  {
+    id: '2',
+    name: 'Jane Smith',
+    email: 'jane@example.com',
+    role: 'User',
+    phone: '098-765-4321',
+    location: 'Los Angeles',
+    company: 'Globex Corp',
+    status: 'Offline',
+  },
+  // Añadir más datos para probar la paginación
+  ...Array(10)
+    .fill(0)
+    .map((_, i) => ({
+      id: (i + 3).toString(),
+      name: `User ${i + 3}`,
+      email: `user${i + 3}@example.com`,
+      role: 'User',
+      phone: '555-555-5555',
+      location: 'Chicago',
+      company: 'Test Corp',
+      status: i % 2 === 0 ? 'Online' : 'Offline',
+    })),
+];
+
+const mockColumns: ColumnDef<MockUser>[] = [
   {
     accessorKey: 'name',
     header: () => 'Name',
@@ -67,49 +109,13 @@ const mockColumns: ColumnDef<MockUser, unknown>[] = [
   },
 ];
 
+const mockHandlers = {
+  onEdit: jest.fn(),
+  onDelete: jest.fn(),
+};
+
 describe('DataTable Component', () => {
-  const mockData: MockUser[] = [
-    {
-      id: 1,
-      name: 'John Doe',
-      email: 'john@example.com',
-      role: 'Admin',
-      phone: '123-456-7890',
-      location: 'New York',
-      company: 'Acme Inc',
-      status: 'Online',
-    },
-    {
-      id: 2,
-      name: 'Jane Smith',
-      email: 'jane@example.com',
-      role: 'User',
-      phone: '098-765-4321',
-      location: 'Los Angeles',
-      company: 'Globex Corp',
-      status: 'Offline',
-    },
-    // Añadir más datos para probar la paginación
-    ...Array(10)
-      .fill(0)
-      .map((_, i) => ({
-        id: i + 3,
-        name: `User ${i + 3}`,
-        email: `user${i + 3}@example.com`,
-        role: 'User',
-        phone: '555-555-5555',
-        location: 'Chicago',
-        company: 'Test Corp',
-        status: i % 2 === 0 ? 'Online' : 'Offline',
-      })),
-  ];
-
-  const mockHandlers = {
-    onEdit: jest.fn(),
-    onDelete: jest.fn(),
-  };
-
-  test('debe mostrar la tabla con paginación y componentes distribuidos correctamente', () => {
+  test('debe mostrar la tabla con paginación como componente separado', () => {
     render(
       <DataTable columns={mockColumns} data={mockData} onEdit={mockHandlers.onEdit} onDelete={mockHandlers.onDelete} />,
     );
@@ -121,27 +127,11 @@ describe('DataTable Component', () => {
     // Verificar que se muestra al menos un nombre de usuario
     expect(screen.getByText('John Doe')).toBeInTheDocument();
 
-    // Verificar que existe el contenedor de paginación con grid de 3 columnas
-    const paginationContainer = screen.getByTestId('pagination-container');
-    expect(paginationContainer).toBeInTheDocument();
-    expect(paginationContainer).toHaveClass('grid');
-    expect(paginationContainer).toHaveClass('grid-cols-3');
+    // Verificar que el componente Pagination está incluido
+    const paginationComponent = screen.getByTestId('mocked-pagination');
+    expect(paginationComponent).toBeInTheDocument();
 
-    // Verificar que el contador de páginas está presente en la primera columna
-    const pageCounter = screen.getByTestId('page-counter');
-    expect(pageCounter).toBeInTheDocument();
-    expect(pageCounter).toHaveTextContent('of');
-
-    // Verificar que el selector de filas por página está presente en la columna central
-    const rowsPerPage = screen.getByTestId('rows-per-page');
-    expect(rowsPerPage).toBeInTheDocument();
-    expect(rowsPerPage).toHaveClass('flex');
-    expect(rowsPerPage).toHaveClass('justify-center');
-
-    // Verificar que los botones de navegación están presentes en la columna derecha
-    const navigationButtons = screen.getByTestId('navigation-buttons');
-    expect(navigationButtons).toBeInTheDocument();
-    expect(navigationButtons).toHaveClass('flex');
-    expect(navigationButtons).toHaveClass('justify-end');
+    // Verificar que el componente Pagination fue llamado
+    expect(Pagination).toHaveBeenCalled();
   });
 });
