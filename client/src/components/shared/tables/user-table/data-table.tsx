@@ -12,24 +12,12 @@ import {
   getSortedRowModel,
   Row,
 } from '@tanstack/react-table';
-import {
-  Button,
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-} from '@/components/ui';
+import {Table, TableBody, TableCell, TableHead, TableRow} from '@/components/ui';
 
 import {FiSearch} from 'react-icons/fi';
-import {IoArrowBack, IoArrowForward} from 'react-icons/io5';
 import {HiMiniPencil} from 'react-icons/hi2';
 import {TbTrashFilled} from 'react-icons/tb';
+import {Pagination} from './components/Pagination';
 
 // Definimos la interfaz para el meta de la columna
 interface ColumnMeta {
@@ -186,58 +174,7 @@ export function DataTable<TData, TValue>({columns, data, onEdit, onDelete}: Data
       </div>
 
       {/* Unified Pagination */}
-      <div className='mt-4'>
-        <div className='grid grid-cols-3 items-center gap-2 justify-between' data-testid='pagination-container'>
-          <div className='text-sm md:text-base text-gray-700 dark:text-[#FFFFFF]' data-testid='page-counter'>
-            {table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1} -{' '}
-            {Math.min(
-              (table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize,
-              table.getFilteredRowModel().rows.length,
-            )}{' '}
-            of {table.getFilteredRowModel().rows.length}
-          </div>
-
-          <div className='flex items-center justify-center' data-testid='rows-per-page'>
-            <p className='text-sm md:text-base text-gray-700 dark:text-[#FFFFFF] mr-1'>
-              <span className='hidden md:inline'>Rows per page:</span>
-              <span className='inline md:hidden'>Rows:</span>
-            </p>
-            <Select onValueChange={(value) => table.setPageSize(+value)}>
-              <SelectTrigger className='h-8 w-[70px] border-gray-300 dark:border-[#5F5F5F] bg-white dark:bg-[#212121] text-black dark:text-white'>
-                <SelectValue placeholder={table.getState().pagination.pageSize} />
-              </SelectTrigger>
-              <SelectContent className='bg-white dark:bg-[#212121] text-black dark:text-white border-gray-300 dark:border-[#5F5F5F]'>
-                {[5, 10, 20, 30, 40, 50].map((pageSize) => (
-                  <SelectItem key={pageSize} value={`${pageSize}`}>
-                    {pageSize}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className='flex items-center gap-2 justify-end' data-testid='navigation-buttons'>
-            <Button
-              variant='outline'
-              size='sm'
-              onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}
-              className='border-gray-300 dark:border-[#5F5F5F] w-8 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-[#1A1A1A]'
-            >
-              <IoArrowBack className='h-4 w-4' color='#7B99FF' />
-            </Button>
-            <Button
-              variant='outline'
-              size='sm'
-              onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}
-              className='border-gray-300 dark:border-[#5F5F5F] w-8 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-[#1A1A1A]'
-            >
-              <IoArrowForward className='h-4 w-4' color='#7B99FF' />
-            </Button>
-          </div>
-        </div>
-      </div>
+      <Pagination table={table} />
     </div>
   );
 }
