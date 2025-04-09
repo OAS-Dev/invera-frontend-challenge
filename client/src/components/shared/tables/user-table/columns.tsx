@@ -123,11 +123,12 @@ export const columns: ColumnDef<UserColumns>[] = [
       </div>
     ),
     cell: ({row}) => {
-      const company = row.getValue('company') as string;
+      const company = row.getValue('company') as string | undefined;
 
-      const companySlug = company.toLowerCase().replace(/\s+/g, '');
+      // Asegurarse de que company no sea undefined antes de llamar a toLowerCase
+      const companySlug = company ? company.toLowerCase().replace(/\s+/g, '') : '';
 
-      const hasLogo = CONFIG.LOGOS.includes(companySlug);
+      const hasLogo = company && CONFIG.LOGOS.includes(companySlug);
       const logoPath = hasLogo ? `/icons/company/${companySlug}.svg` : '';
 
       return (

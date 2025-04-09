@@ -97,7 +97,7 @@ export function DataTable<TData, TValue>({columns, data, onEdit, onDelete}: Data
   });
 
   return (
-    <>
+    <div data-testid='data-table'>
       <div className='rounded-xl border border-[#5F5F5F] dark:border-[#5F5F5F] pt-6 bg-white dark:bg-[#121212] text-black dark:text-white overflow-hidden shadow-sm'>
         <div className='px-0 rounded-xl'>
           <div className='flex flex-col md:flex-row md:justify-between md:items-center mb-4 px-6 md:px-8 lg:px-6'>
@@ -187,8 +187,8 @@ export function DataTable<TData, TValue>({columns, data, onEdit, onDelete}: Data
 
       {/* Unified Pagination */}
       <div className='mt-4'>
-        <div className='grid grid-cols-3 items-center gap-2 justify-between'>
-          <div className='text-sm md:text-base text-gray-700 dark:text-[#FFFFFF]'>
+        <div className='grid grid-cols-3 items-center gap-2 justify-between' data-testid='pagination-container'>
+          <div className='text-sm md:text-base text-gray-700 dark:text-[#FFFFFF]' data-testid='page-counter'>
             {table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1} -{' '}
             {Math.min(
               (table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize,
@@ -197,7 +197,7 @@ export function DataTable<TData, TValue>({columns, data, onEdit, onDelete}: Data
             of {table.getFilteredRowModel().rows.length}
           </div>
 
-          <div className='flex items-center justify-center'>
+          <div className='flex items-center justify-center' data-testid='rows-per-page'>
             <p className='text-sm md:text-base text-gray-700 dark:text-[#FFFFFF] mr-1'>
               <span className='hidden md:inline'>Rows per page:</span>
               <span className='inline md:hidden'>Rows:</span>
@@ -216,7 +216,7 @@ export function DataTable<TData, TValue>({columns, data, onEdit, onDelete}: Data
             </Select>
           </div>
 
-          <div className='flex items-center gap-2 justify-end'>
+          <div className='flex items-center gap-2 justify-end' data-testid='navigation-buttons'>
             <Button
               variant='outline'
               size='sm'
@@ -238,6 +238,6 @@ export function DataTable<TData, TValue>({columns, data, onEdit, onDelete}: Data
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
